@@ -4,7 +4,8 @@
 
 enum ShaderType { VERTEX = 1, FRAGMENT };
 
-class Shader {
+class Shader 
+{
 private:
 	std::string m_FilePath;
 	unsigned int m_RendererId;

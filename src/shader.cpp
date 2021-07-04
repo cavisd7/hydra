@@ -7,7 +7,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-static std::string ReadFileAsString(const std::string& path, ShaderType type) {
+static std::string ReadFileAsString(const std::string& path, ShaderType type) 
+{
 	std::string ext = type == 1 ? ".vert" : ".frag";
 	std::string result;
 
@@ -28,27 +29,33 @@ static std::string ReadFileAsString(const std::string& path, ShaderType type) {
 };
 
 Shader::Shader(const std::string& filepath)
-	: m_FilePath(filepath), m_RendererId(0) {
+	: m_FilePath(filepath), m_RendererId(0) 
+{
 	m_RendererId = MakeShader(filepath);
 };
 
-Shader::~Shader() {
+Shader::~Shader() 
+{
 	glDeleteProgram(m_RendererId);
 };
 
-void Shader::Bind() const {
+void Shader::Bind() const 
+{
 	glUseProgram(m_RendererId);
 };
 
-void Shader::Unbind() const {
+void Shader::Unbind() const 
+{
 	glUseProgram(0);
 };
 
-void Shader::SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3) {
+void Shader::SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3) 
+{
 	glUniform4f(GetUniformLocation(name), v0, v1, v2, v3);
 };
 
-unsigned int Shader::MakeShader(const std::string& path) {
+unsigned int Shader::MakeShader(const std::string& path) 
+{
 	std::string vertexSource = ReadFileAsString(path, VERTEX);
 	std::string fragmentSource = ReadFileAsString(path, FRAGMENT);
 
@@ -70,7 +77,8 @@ unsigned int Shader::MakeShader(const std::string& path) {
 	return program;
 };
 
-unsigned int Shader::CompileShader(unsigned int type, const std::string& source) {
+unsigned int Shader::CompileShader(unsigned int type, const std::string& source) 
+{
     unsigned int id = glCreateShader(type);
 
     const char* src = source.c_str();
@@ -80,7 +88,8 @@ unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
     
     int isCompiled = 0;
     glGetShaderiv(id, GL_COMPILE_STATUS, &isCompiled);
-    if (isCompiled == GL_FALSE) {
+    if (isCompiled == GL_FALSE) 
+	{
 		int length;
 		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
 
@@ -97,9 +106,11 @@ unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
     return id;
 };
 
-int Shader::GetUniformLocation(const std::string& name) {
+int Shader::GetUniformLocation(const std::string& name)
+{
 	int location = glGetUniformLocation(m_RendererId, name.c_str());
-	if (location == -1) {
+	if (location == -1) 
+	{
 		std::cout << "[WARNING] Uniform: " << name << "Does not exist!" << std::endl;
 	};
 
